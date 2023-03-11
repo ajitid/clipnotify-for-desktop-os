@@ -13,6 +13,11 @@ With poetry installing the package pywin32 happens successfully but the programs
 
   - http://nspasteboard.org/
 
+- on mac
+
+  - https://old.reddit.com/r/rust/comments/uhdvfy/how_to_listen_for_clipboard_changes/i75yv2f/
+  - https://github.com/p0deje/Maccy/blob/86b6dd79b2d0f52205bb044c2561175b683a6398/Maccy/Clipboard.swift#L145-L167
+
 - copy formats
 
   - https://superuser.com/questions/199285/how-to-copy-image-to-clipboard-to-paste-to-another-application
