@@ -1,3 +1,10 @@
+install pywin32 (or whatever that dep reqd. is) using miniconda
+install conda forge
+conda install cx_Freeze
+cxfreeze -c .\clipnotify-win.py --target-dir dist --include-msvcr --excludes 'email,tkinter,tcl8,tcl8.6,tk8.6,unittest,test,html,http,pydoc_data,xml'
+^ or better create a smaller binary using C#, ref. https://github.com/abdusco/dumpclip
+^ otherwisee tellt them that poetry won't work
+
 WinRT/WinSDK requires a GUI window to be in foreground for clipboard monitoring to work (https://github.com/microsoft/WindowsAppSDK/issues/62). Thankfully we can use Win32 instead, which has an API for monitoring clipboard in CLI as well. Read more about them here:
 
 I am using miniconda and I installed the package using `conda install pywin32`. Even though this project looks like it is using poetry, actually I'm not using it any manner — not even sourcing poetry's python environment. I am running the program using conda base like `python .\clipnotify_win\main.py`  
