@@ -2,8 +2,9 @@
 package main
 
 import (
-	"os"
+	"fmt"
 	"syscall"
+	"unsafe"
 
 	"github.com/gonutz/w32/v2"
 )
@@ -11,8 +12,6 @@ import (
 const (
 	WM_CLIPBOARDUPDATE = 0x031D
 )
-
-var exitChan = make(chan struct{})
 
 func main() {
 	// Create a window to receive messages
@@ -38,12 +37,7 @@ func main() {
 	// Add the window as a clipboard viewer
 	w32.AddClipboardFormatListener(hwnd)
 
-	// Start a goroutine to handle the exit signal
-	go func() {
-		<-exitChan
-		w32.PostQuitMessage(0)
-		os.Exit(0)
-	}()
+	fmt.Println("Monitoring clipboard for changes. Press Ctrl+C to exit.")
 
 	// Message loop
 	var msg w32.MSG
@@ -64,12 +58,8 @@ func wndProc(hwnd w32.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 				pszText := w32.GlobalLock(w32.HGLOBAL(hClipData))
 				if pszText != nil {
 					defer w32.GlobalUnlock(w32.HGLOBAL(hClipData))
-
-					// clipboardText := w32.UTF16PtrToString((*uint16)(unsafe.Pointer(pszText)))
-					// fmt.Printf("New clipboard content: %s\n", clipboardText)
-
-					// Signal to exit the program
-					close(exitChan)
+					clipboardText := w32.UTF16PtrToString((*uint16)(unsafe.Pointer(pszText)))
+					fmt.Printf("New clipboard content: %s\n", clipboardText)
 				}
 			}
 		}
