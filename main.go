@@ -4,7 +4,6 @@ package main
 import (
 	"fmt"
 	"syscall"
-	"unsafe"
 
 	"github.com/gonutz/w32/v2"
 )
@@ -58,8 +57,9 @@ func wndProc(hwnd w32.HWND, msg uint32, wParam, lParam uintptr) uintptr {
 				pszText := w32.GlobalLock(w32.HGLOBAL(hClipData))
 				if pszText != nil {
 					defer w32.GlobalUnlock(w32.HGLOBAL(hClipData))
-					clipboardText := w32.UTF16PtrToString((*uint16)(unsafe.Pointer(pszText)))
-					fmt.Printf("New clipboard content: %s\n", clipboardText)
+					// clipboardText := w32.UTF16PtrToString((*uint16)(unsafe.Pointer(pszText)))
+					// fmt.Printf("New clipboard content: %s\n", clipboardText)
+					fmt.Println("changed")
 				}
 			}
 		}
